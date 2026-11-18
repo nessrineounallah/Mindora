@@ -40,6 +40,7 @@ private val navScreens = listOf(
     NavScreen.Subjects,
     NavScreen.Tasks,
     NavScreen.Progress,
+    NavScreen.Assistant,
     NavScreen.Settings
 )
 

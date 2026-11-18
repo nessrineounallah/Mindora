@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.mindora.ai.viewmodel.LocalAiViewModel
 import com.example.mindora.ui.navigation.BottomNavigationBar
 import com.example.mindora.ui.navigation.MindoraAppNavHost
 import com.example.mindora.ui.navigation.MindoraNavigationRail
@@ -38,7 +39,8 @@ fun MindoraMainScreen(
     subjectViewModel: SubjectViewModel,
     taskViewModel: TaskViewModel,
     progressViewModel: ProgressViewModel,
-    studentProfileViewModel: StudentProfileViewModel
+    studentProfileViewModel: StudentProfileViewModel,
+    localAiViewModel: LocalAiViewModel
 ) {
     val context = LocalContext.current
     val preferences = remember(context) {
@@ -66,6 +68,7 @@ fun MindoraMainScreen(
                             taskViewModel = taskViewModel,
                             progressViewModel = progressViewModel,
                             studentProfileViewModel = studentProfileViewModel,
+                            localAiViewModel = localAiViewModel,
                             isDarkMode = isDarkMode,
                             onDarkModeChange = { isDarkMode = it },
                             modifier = Modifier.fillMaxSize()
@@ -84,6 +87,7 @@ fun MindoraMainScreen(
                         taskViewModel = taskViewModel,
                         progressViewModel = progressViewModel,
                         studentProfileViewModel = studentProfileViewModel,
+                        localAiViewModel = localAiViewModel,
                         isDarkMode = isDarkMode,
                         onDarkModeChange = { isDarkMode = it },
                         modifier = Modifier.padding(paddingValues)

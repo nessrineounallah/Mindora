@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.example.mindora.data.database.MindoraDatabase
+import com.example.mindora.ai.data.LiteRtLmLocalAiRepository
+import com.example.mindora.ai.viewmodel.LocalAiViewModel
 import com.example.mindora.data.repository.StudyGoalRepository
 import com.example.mindora.data.repository.StudentProfileRepository
 import com.example.mindora.data.repository.StudyActivityRepository
@@ -37,14 +39,24 @@ class MainActivity : ComponentActivity() {
         val taskRepository = TaskRepository(database.taskDao(), studyActivityRepository)
         val studentProfileRepository = StudentProfileRepository(database.studentProfileDao())
         val studyGoalRepository = StudyGoalRepository(database.studyGoalDao())
+        val localAiRepository = LiteRtLmLocalAiRepository(applicationContext)
 
-        val factory = ViewModelFactory(application, subjectRepository, taskRepository, studyGoalRepository, studentProfileRepository, studyActivityRepository)
+        val factory = ViewModelFactory(
+            application,
+            subjectRepository,
+            taskRepository,
+            studyGoalRepository,
+            studentProfileRepository,
+            studyActivityRepository,
+            localAiRepository
+        )
 
         val homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         val subjectViewModel = ViewModelProvider(this, factory)[SubjectViewModel::class.java]
         val taskViewModel = ViewModelProvider(this, factory)[TaskViewModel::class.java]
         val progressViewModel = ViewModelProvider(this, factory)[ProgressViewModel::class.java]
         val studentProfileViewModel = ViewModelProvider(this, factory)[com.example.mindora.viewmodel.StudentProfileViewModel::class.java]
+        val localAiViewModel = ViewModelProvider(this, factory)[LocalAiViewModel::class.java]
 
         setContent {
             MindoraMainScreen(
@@ -52,7 +64,8 @@ class MainActivity : ComponentActivity() {
                 subjectViewModel = subjectViewModel,
                 taskViewModel = taskViewModel,
                 progressViewModel = progressViewModel,
-                studentProfileViewModel = studentProfileViewModel
+                studentProfileViewModel = studentProfileViewModel,
+                localAiViewModel = localAiViewModel
             )
         }
     }

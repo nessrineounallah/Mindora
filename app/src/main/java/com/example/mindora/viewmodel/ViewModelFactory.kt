@@ -8,6 +8,8 @@ import com.example.mindora.data.repository.StudentProfileRepository
 import com.example.mindora.data.repository.StudyActivityRepository
 import com.example.mindora.data.repository.SubjectRepository
 import com.example.mindora.data.repository.TaskRepository
+import com.example.mindora.ai.data.LiteRtLmLocalAiRepository
+import com.example.mindora.ai.viewmodel.LocalAiViewModel
 
 class ViewModelFactory(
     private val application: Application,
@@ -15,7 +17,8 @@ class ViewModelFactory(
     private val taskRepository: TaskRepository,
     private val studyGoalRepository: StudyGoalRepository,
     private val studentProfileRepository: StudentProfileRepository,
-    private val studyActivityRepository: StudyActivityRepository
+    private val studyActivityRepository: StudyActivityRepository,
+    private val localAiRepository: LiteRtLmLocalAiRepository
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -35,6 +38,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(ProgressViewModel::class.java) -> {
                 ProgressViewModel(taskRepository, studyGoalRepository, studyActivityRepository) as T
+            }
+            modelClass.isAssignableFrom(LocalAiViewModel::class.java) -> {
+                LocalAiViewModel(application, localAiRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
